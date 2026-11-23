@@ -2,58 +2,140 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vitim Mídia</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f1f5f9;
-      color: #1e293b;
-    }
-    header {
-      background: #0755a5;
-      color: white;
-      padding: 25px;
-      text-align: center;
-    }
-    main {
-      max-width: 900px;
-      margin: 30px auto;
-      padding: 20px;
-    }
-    .painel {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px #0001;
-    }
-    button {
-      background: #0755a5;
-      color: white;
-      border: 0;
-      padding: 12px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vitim Mídia</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#f1f5f9;color:#1e293b}
+header{background:#0755a5;color:white;padding:22px 30px}
+header h1{margin:0;font-size:25px}
+header p{margin:6px 0 0;color:#dbeafe}
+.layout{display:flex;min-height:calc(100vh - 85px)}
+nav{width:230px;background:#fff;padding:20px;border-right:1px solid #ddd}
+nav button{display:block;width:100%;padding:14px;margin-bottom:8px;border:0;border-radius:8px;text-align:left;background:white;color:#334155;font-size:15px;cursor:pointer}
+nav button:hover,nav button.active{background:#e5efff;color:#0755a5}
+main{flex:1;padding:30px;min-width:0}
+h2{margin-top:0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px}
+.card{background:white;padding:22px;border-radius:12px;box-shadow:0 2px 8px #0000000b}
+.card strong{font-size:30px;color:#0755a5;display:block;margin-top:12px}
+.section{display:none}
+.section.active{display:block}
+.panel{background:white;padding:22px;border-radius:12px;margin-top:20px}
+input{padding:12px;border:1px solid #cbd5e1;border-radius:7px;width:100%;margin:8px 0 15px}
+.action{background:#0755a5;color:white;border:0;padding:12px 18px;border-radius:7px;cursor:pointer}
+.item{padding:12px;border-bottom:1px solid #eee}
+@media(max-width:650px){
+.layout{display:block}
+nav{width:100%;display:flex;overflow-x:auto;gap:5px}
+nav button{min-width:115px;text-align:center}
+main{padding:18px}
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Vitim Mídia</h1>
-    <p>Sistema de gerenciamento de mídia indoor</p>
-  </header>
+<header>
+<h1>Vitim Mídia</h1>
+<p>Gerenciamento profissional de mídia indoor</p>
+</header>
+<div class="layout">
+<nav>
+<button class="active" onclick="abrir('inicio',this)">🏠 Início</button>
+<button onclick="abrir('tvs',this)">📺 Minhas TVs</button>
+<button onclick="abrir('anuncios',this)">🖼️ Anúncios</button>
+<button onclick="abrir('playlists',this)">📋 Playlists</button>
+<button onclick="abrir('config',this)">⚙️ Configurações</button>
+</nav>
+<main>
+<section id="inicio" class="section active">
+<h2>Painel administrativo</h2>
+<p>Bem-vindo ao Vitim Mídia!</p>
+<div class="cards">
+<div class="card">📺 TVs cadastradas<strong id="totalTV">0</strong></div>
+<div class="card">🖼️ Anúncios<strong id="totalAnuncios">0</strong></div>
+<div class="card">📋 Playlists<strong>0</strong></div>
+</div>
+<div class="panel">
+<h3>Status do sistema</h3>
+<p>🟢 Painel carregado com sucesso.</p>
+<p>Player offline: em desenvolvimento.</p>
+</div>
+</section>
 
-  <main>
-    <div class="painel">
-      <h2>Painel administrativo</h2>
-      <p>Bem-vindo ao Vitim Mídia!</p>
-      <p>Status do sistema: <strong>Em desenvolvimento</strong></p>
-      <button onclick="alert('Vitim Mídia iniciado!')">
-        Acessar painel
-      </button>
-    </div>
-  </main>
+<section id="tvs" class="section">
+<h2>Minhas TVs</h2>
+<div class="panel">
+<h3>Cadastrar nova TV</h3>
+<input id="nomeTV" placeholder="Nome da TV ou estabelecimento">
+<button class="action" onclick="cadastrarTV()">Cadastrar TV</button>
+<div id="listaTV"></div>
+</div>
+</section>
+
+<section id="anuncios" class="section">
+<h2>Anúncios</h2>
+<div class="panel">
+<h3>Adicionar anúncio</h3>
+<input id="nomeAnuncio" placeholder="Nome da propaganda">
+<input id="arquivoAnuncio" type="file" accept="image/*,video/*">
+<button class="action" onclick="cadastrarAnuncio()">Adicionar anúncio</button>
+<div id="listaAnuncios"></div>
+</div>
+</section>
+
+<section id="playlists" class="section">
+<h2>Playlists</h2>
+<div class="panel">
+<p>A organização e distribuição das propagandas será desenvolvida na próxima etapa.</p>
+</div>
+</section>
+
+<section id="config" class="section">
+<h2>Configurações</h2>
+<div class="panel">
+<p><strong>Projeto:</strong> Vitim Mídia</p>
+<p><strong>Versão:</strong> 0.1</p>
+<p><strong>Identidade visual:</strong> Azul, branco e cinza.</p>
+<p><strong>Sincronização offline:</strong> Em desenvolvimento.</p>
+</div>
+</section>
+</main>
+</div>
+<script>
+function abrir(id,botao){
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+botao.classList.add('active');
+}
+let tvs=JSON.parse(localStorage.getItem('vitimTVs')||'[]');
+let anuncios=JSON.parse(localStorage.getItem('vitimAnuncios')||'[]');
+function atualizar(){
+document.getElementById('totalTV').textContent=tvs.length;
+document.getElementById('totalAnuncios').textContent=anuncios.length;
+document.getElementById('listaTV').innerHTML=tvs.map(t=>'<div class="item">📺 '+t+'</div>').join('');
+document.getElementById('listaAnuncios').innerHTML=anuncios.map(a=>'<div class="item">🖼️ '+a+'</div>').join('');
+}
+function cadastrarTV(){
+let n=document.getElementById('nomeTV').value.trim();
+if(!n)return alert('Digite o nome da TV');
+tvs.push(n);
+localStorage.setItem('vitimTVs',JSON.stringify(tvs));
+document.getElementById('nomeTV').value='';
+atualizar();
+}
+function cadastrarAnuncio(){
+let n=document.getElementById('nomeAnuncio').value.trim();
+let f=document.getElementById('arquivoAnuncio').files[0];
+if(!n||!f)return alert('Informe o nome e escolha um arquivo');
+anuncios.push(n+' ('+f.name+')');
+localStorage.setItem('vitimAnuncios',JSON.stringify(anuncios));
+document.getElementById('nomeAnuncio').value='';
+document.getElementById('arquivoAnuncio').value='';
+atualizar();
+}
+atualizar();
+</script>
 </body>
 </html>
